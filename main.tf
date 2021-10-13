@@ -68,6 +68,12 @@ resource "aws_eip" "test_1" {
   vpc = true
 }
 
+resource "aws_ec2_tag" "test_1_eip" {
+  resource_id = resource.aws_eip.test_1.id
+  key         = "Name"
+  value       = "test_1"
+}
+
 resource "aws_eip_association" "test_1" {
   instance_id   = resource.aws_instance.test_1.id
   allocation_id = aws_eip.test_1.id
