@@ -27,16 +27,22 @@ provider "aws" {
 ###########
 ### VPC ###
 ###########
-data "aws_vpc" "tf_test" {
-  id              = "vpc-20C6C696"
-  cidr_block      = "172.31.0.0/16"
+resource "aws_vpc" "tf_test" {
+  cidr_block = "172.31.0.0/16"
 }
+
+resource "aws_ec2_tag" "tf_test_vpc" {
+  resource_id = resource.aws_vpc.tf_test.id
+  key         = "Name"
+  value       = "tf_test"
+}
+
 
 ###############
 ### Subnets ###
 ###############
 resource "aws_subnet" "subnet1" {
-  vpc_id            = data.aws_vpc.tf_test.id
+  vpc_id            = resource.aws_vpc.tf_test.id
   cidr_block        = "172.31.16.0/20"
   availability_zone = "ru-msk-comp1p"
 }
@@ -47,7 +53,7 @@ resource "aws_subnet" "subnet1" {
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow SSH inbound connections"
-  vpc_id      = data.aws_vpc.tf_test.id
+  vpc_id      = resource.aws_vpc.tf_test.id
 
   ingress {
     description = "SSH inbound"
