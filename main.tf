@@ -92,13 +92,13 @@ resource "aws_instance" "test_1" {
   tags = {
     Name = "test_1"
   }
-  ami               = "cmi-0B217391"
-  instance_type     = "m5.2small"
-  subnet_id         = resource.aws_subnet.subnet1.id
-  monitoring        = true
-  source_dest_check = true
-  key_name          = "gmelnikov"
-  private_ip        = "172.31.16.4"
+  ami                         = "cmi-0B217391"
+  instance_type               = "m5.2small"
+  subnet_id                   = resource.aws_subnet.subnet1.id
+  monitoring                  = true
+  source_dest_check           = true
+  key_name                    = "gmelnikov"
+  private_ip                  = "172.31.16.4"
   associate_public_ip_address = false
   root_block_device {
     volume_size = 32
