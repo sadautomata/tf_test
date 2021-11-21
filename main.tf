@@ -29,6 +29,10 @@ provider "aws" {
 ###########
 resource "aws_vpc" "tf_test" {
   cidr_block = "172.31.0.0/16"
+  
+  lifecycle {
+    ignore_changes = [ tags_all, tags]
+  }
 }
 
 resource "aws_ec2_tag" "tf_test_vpc" {
@@ -45,6 +49,9 @@ resource "aws_subnet" "subnet1" {
   vpc_id            = resource.aws_vpc.tf_test.id
   cidr_block        = "172.31.16.0/20"
   availability_zone = "ru-msk-comp1p"
+  lifecycle {
+    ignore_changes = [ tags_all, tags]
+  }
 }
 
 ##########
@@ -65,6 +72,10 @@ resource "aws_security_group" "allow_ssh" {
   tags = {
     Name = "allow_ssh"
   }
+
+  lifecycle {
+    ignore_changes = [ tags_all, tags]
+  }
 }
 
 ##################
@@ -72,6 +83,9 @@ resource "aws_security_group" "allow_ssh" {
 ##################
 resource "aws_eip" "test_1" {
   vpc = true
+  lifecycle {
+    ignore_changes = [ tags_all, tags]
+  }
 }
 
 resource "aws_ec2_tag" "test_1_eip" {
@@ -104,7 +118,12 @@ resource "aws_instance" "test_1" {
     volume_size = 32
     volume_type = "gp2"
   }
+
   security_groups = [
     aws_security_group.allow_ssh.id
   ]
+
+  lifecycle {
+    ignore_changes = [ security_groups, associate_public_ip_address, tags_all, tags]
+  }
 }
