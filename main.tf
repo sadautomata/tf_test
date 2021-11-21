@@ -117,6 +117,9 @@ resource "aws_instance" "test_1" {
   root_block_device {
     volume_size = 32
     volume_type = "gp2"
+    tags = {
+        Name = "pepka test"
+    }
   }
 
   security_groups = [
