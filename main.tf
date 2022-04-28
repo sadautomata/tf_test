@@ -1,6 +1,15 @@
 variable "access_key" {}
 variable "secret_key" {}
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hc-registry.website.cloud.croc.ru/hashicorp/aws"
+      version = "~> 3.63.0"
+    }
+  }
+}
+
 variable "region" {
   default = "croc"
 }
