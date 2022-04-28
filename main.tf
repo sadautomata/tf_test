@@ -115,8 +115,8 @@ resource "aws_instance" "test_1" {
   tags = {
     Name = "test_1"
   }
-  ami                         = "cmi-0B217391"
-  instance_type               = "m5.2small"
+  ami                         = "cmi-0E29FB61"                  # AlmaLinux 8.5 [Cloud Image]
+  instance_type               = "c5.large"
   subnet_id                   = resource.aws_subnet.subnet1.id
   monitoring                  = true
   source_dest_check           = true
