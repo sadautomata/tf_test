@@ -1,41 +1,4 @@
-variable "access_key" {}
-variable "secret_key" {}
-
-terraform {
-  required_providers {
-    aws = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/aws"
-      version = "~> 3.63.0"
-    }
-  }
-}
-
-variable "region" {
-  default = "croc"
-}
-
-provider "aws" {
-  endpoints {
-    ec2 = "https://api.cloud.croc.ru"
-  }
-
-  # NOTE: STS API is not implemented, skip validation
-  skip_credentials_validation = true
-
-  # NOTE: IAM API is not implemented, skip validation
-  skip_requesting_account_id = true
-
-  # NOTE: Region has different name, skip validation
-  skip_region_validation = true
-
-  access_key = var.access_key
-  secret_key = var.secret_key
-  region     = var.region
-}
-
-###########
 ### VPC ###
-###########
 resource "aws_vpc" "tf_test" {
   cidr_block = "172.31.0.0/16"
   
@@ -51,9 +14,7 @@ resource "aws_ec2_tag" "tf_test_vpc" {
 }
 
 
-###############
 ### Subnets ###
-###############
 resource "aws_subnet" "subnet1" {
   vpc_id            = resource.aws_vpc.tf_test.id
   cidr_block        = "172.31.16.0/20"
@@ -63,9 +24,7 @@ resource "aws_subnet" "subnet1" {
   }
 }
 
-##########
 ### SG ###
-##########
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow SSH inbound connections"
@@ -87,9 +46,7 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
-##################
 ### Elastic IP ###
-##################
 resource "aws_eip" "test_1" {
   vpc = true
   lifecycle {
@@ -108,9 +65,7 @@ resource "aws_eip_association" "test_1" {
   allocation_id = aws_eip.test_1.id
 }
 
-#####################
 ### EC2 Instances ###
-#####################
 resource "aws_instance" "test_1" {
   tags = {
     Name = "test_1"
@@ -136,6 +91,11 @@ resource "aws_instance" "test_1" {
   ]
 
   lifecycle {
-    ignore_changes = [ security_groups, associate_public_ip_address, tags_all, tags]
+    ignore_changes = [
+      security_groups,
+      associate_public_ip_address,
+      tags_all,
+      tags
+    ]
   }
 }
