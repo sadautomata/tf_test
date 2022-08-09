@@ -1,4 +1,11 @@
 resource "aws_s3_bucket" "website_s3_test" {
+  lifecycle {
+    ignore_changes = [
+      tags,
+      replication_configuration,
+      server_side_encryption_configuration
+    ]
+  }
   provider = aws.noregion
   bucket = "website_s3_test"
   acl = "public-read"
