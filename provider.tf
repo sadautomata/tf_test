@@ -7,8 +7,8 @@ variable "region" {
 terraform {
   required_providers {
     aws = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/aws"
-      version = "~> 3.63.0"
+      source  = "hc-registry.website.cloud.croc.ru/C2Devel/croccloud"
+      version = "4.14.0-CROC1"
     }
   }
 }
