@@ -7,6 +7,22 @@ resource "aws_vpc" "tf_test" {
   }
 }
 
+resource "aws_customer_gateway" "default" {
+  bgp_asn    = 65000
+  ip_address = "172.0.0.1"
+  type       = "ipsec.1"
+
+#  provisioner "local-exec" {
+#     command = "c2-ec2 CreateVpnConnection CustomerGatewayId ${aws_customer_gateway.default.id} Type ${aws_customer_gateway.default.type} VpnGatewayId ${resource.aws_vpc.tf_test.id} Options.TunnelOptions.0.TunnelInsideCidr '169.254.252.0/30'"
+#     when = create
+#  }
+#
+#  provisioner "local-exec" {
+#      command = "c2-ec2 DescribeVpnConnections Filter.1.Name customer-gateway-id Filter.1.Value.1 ${self.id} | grep vpnConnectionId | egrep -o 'vpn-[A-Z0-9]+' | while read line; do c2-ec2 DeleteVpnConnection VpnConnectionId $line; done"
+#      when = destroy
+#  }
+}
+
 resource "aws_ec2_tag" "tf_test_vpc" {
   resource_id = resource.aws_vpc.tf_test.id
   key         = "Name"
