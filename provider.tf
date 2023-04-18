@@ -6,9 +6,25 @@ variable "region" {
 
 terraform {
   required_providers {
-    aws = {
-      source  = "hc-registry.website.cloud.croc.ru/C2Devel/croccloud"
+    aws        = {
+      source  = "hc-registry.website.cloud.croc.ru/c2devel/croccloud"
       version = "4.14.0-CROC1"
+    }
+    kubernetes = {
+      source  = "hc-registry.website.cloud.croc.ru/hashicorp/kubernetes"
+      version = "2.11.0"
+    }
+    random     = {
+      source  = "hc-registry.website.cloud.croc.ru/hashicorp/random"
+      version = "3.3.2"
+    }
+    tls        = {
+      source  = "hc-registry.website.cloud.croc.ru/hashicorp/tls"
+      version = "3.1.0"
+    }
+    template    = {
+      source  = "hc-registry.website.cloud.croc.ru/hashicorp/template"
+      version = "2.2.0"
     }
   }
 }
