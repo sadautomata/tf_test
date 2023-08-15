@@ -8,7 +8,7 @@ terraform {
   required_providers {
     aws        = {
       source  = "hc-registry.website.cloud.croc.ru/c2devel/croccloud"
-      version = "4.14.0-CROC1"
+      version = "4.14.0-CROC7"
     }
     kubernetes = {
       source  = "hc-registry.website.cloud.croc.ru/hashicorp/kubernetes"
@@ -32,6 +32,7 @@ terraform {
 provider "aws" {
   endpoints {
     ec2 = "https://api.cloud.croc.ru"
+    elbv2 = "https://elb.cloud.croc.ru"
   }
 
   # NOTE: STS API is not implemented, skip validation

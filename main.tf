@@ -92,7 +92,7 @@ resource "aws_instance" "test_1" {
   monitoring                  = true
   source_dest_check           = true
   key_name                    = "gmelnikov"
-  private_ip                  = "172.31.16.4"
+  private_ip                  = "172.31.16.122"
   associate_public_ip_address = false
   root_block_device {
     volume_size = 32
