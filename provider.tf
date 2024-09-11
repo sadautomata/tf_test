@@ -7,31 +7,23 @@ variable "region" {
 terraform {
   required_providers {
     aws        = {
-      source  = "hc-registry.website.cloud.croc.ru/c2devel/croccloud"
-      version = "4.14.0-CROC7"
+      source  = "tf-registry.nyansq.ru/c2devel/rockitcloud"
+      version = "24.1.0"
     }
-    kubernetes = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/kubernetes"
-      version = "2.11.0"
+    local = {
+        source  = "tf-registry.nyansq.ru/opentofu/local"
+        version = "2.5.1"
     }
-    random     = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/random"
-      version = "3.3.2"
-    }
-    tls        = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/tls"
-      version = "3.1.0"
-    }
-    template    = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/template"
-      version = "2.2.0"
+    ct = {
+        source  = "tf-registry.nyansq.ru/poseidon/ct"
+        version = "0.13.0"
     }
   }
 #  backend "s3" {
 #    bucket                      = "pena54"
 #    key                         = "terraform.tfstate"
 #    region                      = "us-east-1"
-#    endpoint                    = "https://storage.cloud.croc.ru"
+#    endpoint                    = "https://s3.k2.cloud"
 #    skip_credentials_validation = true
 #    skip_region_validation      = true
 #    skip_metadata_api_check     = true
@@ -40,8 +32,7 @@ terraform {
 
 provider "aws" {
   endpoints {
-    ec2 = "https://api.cloud.croc.ru"
-    elbv2 = "https://elb.cloud.croc.ru"
+    ec2 = "https://ec2.k2.cloud"
   }
 
   # NOTE: STS API is not implemented, skip validation
@@ -61,7 +52,7 @@ provider "aws" {
 provider "aws" {
   alias = "noregion"
   endpoints {
-    s3 = "https://storage.cloud.croc.ru"
+    s3 = "https://s3.k2.cloud"
   }
 
   skip_credentials_validation = true
