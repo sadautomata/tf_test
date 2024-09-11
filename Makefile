@@ -1,5 +1,5 @@
 WORKDIR := $(abspath .)
-TERRAFORM := $(shell which terraform)
+TERRAFORM := $(shell which tofu)
 .DEFAULT_GOAL := apply
 
 .PHONY: init apply refresh
