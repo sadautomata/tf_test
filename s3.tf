@@ -26,3 +26,17 @@ resource "aws_s3_bucket" "websites3test" {
 RULES
   }
 }
+
+data "local_file" "foo" {
+  filename = "${path.module}/krol.txt"
+}
+
+resource "aws_s3_object" "krol" {
+  depends_on = [
+    aws_s3_bucket.websites3test
+  ]
+  provider = aws.noregion
+  bucket  = "websites3test"
+  key     = "krol.txt"
+  content = data.local_file.foo.content
+}
