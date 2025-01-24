@@ -1,47 +1,16 @@
-variable "access_key" {}
-variable "secret_key" {}
-variable "region" {
-  default = "croc"
-}
-
 terraform {
   required_providers {
     aws        = {
-      source  = "hc-registry.website.cloud.croc.ru/c2devel/croccloud"
-      version = "4.14.0-CROC7"
-    }
-    kubernetes = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/kubernetes"
-      version = "2.11.0"
-    }
-    random     = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/random"
-      version = "3.3.2"
-    }
-    tls        = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/tls"
-      version = "3.1.0"
-    }
-    template    = {
-      source  = "hc-registry.website.cloud.croc.ru/hashicorp/template"
-      version = "2.2.0"
+      source  = "hc-registry.website.k2.cloud/c2devel/rockitcloud"
+      version = "24.1.0"
     }
   }
-#  backend "s3" {
-#    bucket                      = "pena54"
-#    key                         = "terraform.tfstate"
-#    region                      = "us-east-1"
-#    endpoint                    = "https://storage.cloud.croc.ru"
-#    skip_credentials_validation = true
-#    skip_region_validation      = true
-#    skip_metadata_api_check     = true
-#  }
 }
 
 provider "aws" {
   endpoints {
-    ec2 = "https://api.cloud.croc.ru"
-    elbv2 = "https://elb.cloud.croc.ru"
+    ec2 = "https://ec2.k2.cloud"
+    elbv2 = "https://elb.k2.cloud"
   }
 
   # NOTE: STS API is not implemented, skip validation
@@ -56,20 +25,4 @@ provider "aws" {
   access_key = var.access_key
   secret_key = var.secret_key
   region     = var.region
-}
-
-provider "aws" {
-  alias = "noregion"
-  endpoints {
-    s3 = "https://storage.cloud.croc.ru"
-  }
-
-  skip_credentials_validation = true
-  skip_requesting_account_id  = true
-  skip_region_validation      = true
-
-  insecure   = false
-  access_key = var.access_key
-  secret_key = var.secret_key
-  region     = "us-east-1"
 }

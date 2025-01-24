@@ -32,34 +32,32 @@ resource "aws_lb" "nlb2" {
 ############################
 resource "aws_lb_target_group" "nlb_group1" {
   name     = "targetgroup1"
-  port     = 1812
-  protocol = "UDP"
-  vpc_id   = aws_vpc.croc.id
+  port     = 22
+  protocol = "TCP"
+  vpc_id   = aws_vpc.test.id
 
   health_check {
     enabled = true
     healthy_threshold = 3
     unhealthy_threshold = 3
     interval = 10
-    protocol = "UDP"
-    timeout = 10
+    protocol = "TCP"
   }
 
 }
 
 resource "aws_lb_target_group" "nlb_group2" {
   name     = "targetgroup2"
-  port     = 1812
-  protocol = "UDP"
-  vpc_id   = aws_vpc.croc.id
+  port     = 22
+  protocol = "TCP"
+  vpc_id   = aws_vpc.test.id
 
   health_check {
     enabled = true
     healthy_threshold = 3
     unhealthy_threshold = 3
     interval = 10
-    protocol = "UDP"
-    timeout = 10
+    protocol = "TCP"
   }
 
   tags = {
@@ -72,8 +70,8 @@ resource "aws_lb_target_group" "nlb_group2" {
 ############################
 resource "aws_lb_listener" "nlb_group1_listener" {
   load_balancer_arn = aws_lb.nlb1.arn
-  port              = "1812"
-  protocol          = "UDP"
+  port              = "22"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -84,8 +82,8 @@ resource "aws_lb_listener" "nlb_group1_listener" {
 
 resource "aws_lb_listener" "nlb_group2_listener" {
   load_balancer_arn = aws_lb.nlb2.arn
-  port              = "1812"
-  protocol          = "UDP"
+  port              = "22"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -102,13 +100,13 @@ resource "aws_lb_listener" "nlb_group2_listener" {
 resource "aws_lb_target_group_attachment" "nlb_group1_att1" {
   target_group_arn = aws_lb_target_group.nlb_group1.arn
   target_id        = aws_instance.vm1.id
-  port             = 1812
+  port             = 22
 }
 
 resource "aws_lb_target_group_attachment" "nlb_group1_att2" {
   target_group_arn = aws_lb_target_group.nlb_group1.arn
   target_id        = aws_instance.vm3.id
-  port             = 1812
+  port             = 22
 }
 
 ############################
@@ -117,12 +115,12 @@ resource "aws_lb_target_group_attachment" "nlb_group1_att2" {
 resource "aws_lb_target_group_attachment" "nlb_group2_att1" {
   target_group_arn = aws_lb_target_group.nlb_group2.arn
   target_id        = aws_instance.vm2.id
-  port             = 1812
+  port             = 22
 }
 
 resource "aws_lb_target_group_attachment" "nlb_group2_att2" {
   target_group_arn = aws_lb_target_group.nlb_group2.arn
   target_id        = aws_instance.vm4.id
-  port             = 1812
+  port             = 22
 }
 
